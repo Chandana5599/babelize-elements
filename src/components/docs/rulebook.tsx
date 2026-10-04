@@ -1,7 +1,7 @@
 import { Fragment, type ReactNode } from "react";
 import { ArrowRight, Download } from "lucide-react";
 
-const RULEBOOK_PDF = "/elements-contributor-rulebook.pdf";
+const RULEBOOK_PDF = "/contributors-rulebook.pdf";
 
 interface FlowStep {
   label: string;

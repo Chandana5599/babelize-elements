@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import { source } from "@/lib/source";
 import { LanguageSwitcherDemo } from "@/components/docs/language-switcher-demo";
+import { Flow, RulebookDownload, Takeaway } from "@/components/docs/rulebook";
 
 const GithubIcon = () => (
   <svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -14,6 +15,9 @@ const customComponents = {
   ...defaultMdxComponents,
   LanguageSwitcherDemo,
   GithubIcon,
+  Flow,
+  Takeaway,
+  RulebookDownload,
 };
 
 export default async function Page(props: { params: Promise<{ slug?: string[] }> }) {

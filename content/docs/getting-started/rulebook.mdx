@@ -1,0 +1,263 @@
+---
+title: Contributor Rulebook
+description: Before you code, read the rules. How we work together on Babelize Elements.
+icon: BookOpen
+---
+
+import { Steps, Step } from "fumadocs-ui/components/steps";
+import {
+  BookOpen,
+  Box,
+  CircleCheck,
+  CircleHelp,
+  Code2,
+  Eraser,
+  FileSearch,
+  FileText,
+  FlaskConical,
+  GitFork,
+  GitMerge,
+  Lightbulb,
+  Layers,
+  MessageCircle,
+  MessageSquare,
+  RefreshCw,
+  Send,
+  Star,
+  Target,
+  Terminal,
+  TriangleAlert,
+  Type,
+  User,
+  Users,
+  Feather,
+} from "lucide-react";
+
+<RulebookDownload />
+
+## 01 · Talk before you code
+
+Found a bug? Have an idea? Want to build a feature? Don't start coding yet.
+
+<Flow
+  steps={[
+    { label: "Check", icon: <FileSearch /> },
+    { label: "Discuss", icon: <MessageSquare /> },
+    { label: "Claim", icon: <User /> },
+    { label: "Code", icon: <Code2 /> },
+  ]}
+/>
+
+<Steps>
+  <Step>Check the [existing issues](https://github.com/babelize/babelize-elements/issues).</Step>
+  <Step>Find or create the relevant issue.</Step>
+  <Step>Comment with what you plan to work on.</Step>
+  <Step>Wait for a maintainer to confirm.</Step>
+  <Step>Then start coding.</Step>
+</Steps>
+
+<Takeaway title="Avoid duplicate work.">Keep contributions coordinated.</Takeaway>
+
+## 02 · Open a PR
+
+One PR. One clear change. Keep your PR:
+
+<Cards>
+  <Card icon={<Target />} title="Focused">
+    Solve one problem. Scope your changes to a single issue or feature.
+  </Card>
+  <Card icon={<FileText />} title="Clear">
+    Explain what changed and why. Add context, screenshots if needed, and link the issue.
+  </Card>
+  <Card icon={<CircleCheck />} title="Tested">
+    Make sure your code works as expected and doesn't break existing functionality.
+  </Card>
+  <Card icon={<Users />} title="Reviewable">
+    Keep it small and clean. No formatting changes or unrelated refactors.
+  </Card>
+</Cards>
+
+<Takeaway title="Small, focused PRs are easier to review.">
+  They keep history clean and get merged faster.
+</Takeaway>
+
+## 03 · Code quality
+
+Write code we can maintain. Before opening your PR:
+
+<Cards>
+  <Card icon={<Layers />} title="Follow existing patterns">
+    Keep code consistent with the project.
+  </Card>
+  <Card icon={<Box />} title="Keep components reusable">
+    Build flexible, composable parts.
+  </Card>
+  <Card icon={<Type />} title="Use consistent naming">
+    Follow the naming conventions.
+  </Card>
+  <Card icon={<Feather />} title="Avoid extra dependencies">
+    Keep the project lightweight.
+  </Card>
+  <Card icon={<TriangleAlert />} title="Handle edge cases">
+    Think about error states and scenarios.
+  </Card>
+  <Card icon={<Eraser />} title="Remove unused code">
+    Keep the codebase clean and minimal.
+  </Card>
+  <Card icon={<CircleCheck />} title="Test your changes">
+    Make sure everything works.
+  </Card>
+  <Card icon={<BookOpen />} title="Update docs when needed">
+    Help others understand your changes.
+  </Card>
+</Cards>
+
+New component? Start from the [component template](/docs/getting-started/contributing#component-template).
+
+<Takeaway title="Readable > clever.">Write code for humans, not just machines.</Takeaway>
+
+## 04 · PR review
+
+A PR isn't the finish line.
+
+<Flow
+  steps={[
+    { label: "Submit", icon: <Send /> },
+    { label: "Review", icon: <MessageSquare /> },
+    { label: "Feedback", icon: <FileText /> },
+    { label: "Improve", icon: <RefreshCw /> },
+    { label: "Merge", icon: <GitMerge /> },
+  ]}
+/>
+
+Reviewers may request:
+
+<Cards>
+  <Card icon={<Code2 />} title="Code changes">
+    Refine the implementation or fix issues.
+  </Card>
+  <Card icon={<FlaskConical />} title="Additional tests">
+    Add or improve test coverage.
+  </Card>
+  <Card icon={<FileText />} title="Documentation updates">
+    Update docs, comments, or READMEs.
+  </Card>
+  <Card icon={<CircleHelp />} title="Clarification">
+    Provide more context or explanation.
+  </Card>
+  <Card icon={<MessageSquare />} title="Different approaches">
+    Discuss alternative solutions.
+  </Card>
+</Cards>
+
+<Takeaway title="Feedback is part of contributing.">
+  Be open, be responsive, keep it constructive.
+</Takeaway>
+
+## 05 · Community guidelines
+
+Build with people, not just code.
+
+<Cards>
+  <Card icon={<Users />} title="Be respectful">
+    Treat contributors and maintainers with respect.
+  </Card>
+  <Card icon={<MessageSquare />} title="Be constructive">
+    Point out problems and help find solutions.
+  </Card>
+  <Card icon={<FileText />} title="Give context">
+    Explain your reasoning.
+  </Card>
+  <Card icon={<BookOpen />} title="Help others">
+    Share what you know.
+  </Card>
+  <Card icon={<Target />} title="Keep it focused">
+    Keep discussions relevant.
+  </Card>
+</Cards>
+
+See also our [Code of Conduct](https://github.com/babelize/babelize-elements/blob/main/CODE_OF_CONDUCT.md).
+
+<Takeaway title="Good code matters.">Good collaboration matters too.</Takeaway>
+
+## 06 · Star & fork
+
+Support the project.
+
+<Cards>
+  <Card icon={<Star />} title="Star the repo" href="https://github.com/babelize/babelize-elements">
+    A star shows your support and helps more developers discover Babelize Elements.
+  </Card>
+  <Card
+    icon={<GitFork />}
+    title="Fork the repo"
+    href="https://github.com/babelize/babelize-elements/fork"
+  >
+    Your own copy to experiment, make changes, and open PRs.
+  </Card>
+</Cards>
+
+<Flow
+  steps={[
+    { label: "Star", icon: <Star /> },
+    { label: "Fork", icon: <GitFork /> },
+    { label: "Clone", icon: <Terminal /> },
+    { label: "Build", icon: <Code2 /> },
+  ]}
+/>
+
+```bash
+git clone https://github.com/<your-username>/babelize-elements.git
+cd babelize-elements
+```
+
+<Takeaway title="Small actions. Big impact.">
+  Let's build a more inclusive internet together.
+</Takeaway>
+
+## 07 · Join the community
+
+Don't build alone. Join the [Babelize Discord](https://discord.gg/Qqzr2g4KGx) and head
+to the **#elements** channel for:
+
+<Cards>
+  <Card icon={<MessageCircle />} title="Questions">
+    Ask and get help from others.
+  </Card>
+  <Card icon={<Lightbulb />} title="Ideas">
+    Share ideas and suggestions.
+  </Card>
+  <Card icon={<Code2 />} title="Contributions">
+    Pick up issues and contribute.
+  </Card>
+  <Card icon={<MessageSquare />} title="Feedback">
+    Help us grow.
+  </Card>
+  <Card icon={<TriangleAlert />} title="Issues">
+    Report bugs and discuss fixes.
+  </Card>
+  <Card icon={<Users />} title="Getting help">
+    Stuck? Ask the community.
+  </Card>
+</Cards>
+
+<Takeaway title="Your contribution starts with a conversation.">
+  Ideas grow faster together.
+</Takeaway>
+
+## 08 · Start contributing
+
+Ready to build?
+
+<Steps>
+  <Step>**Star the repo** — show support, help us grow.</Step>
+  <Step>**Fork the repo** — create your own workspace.</Step>
+  <Step>**Join Discord** — be part of the community.</Step>
+  <Step>**Find an issue** — look for `good first issue`.</Step>
+  <Step>**Comment first** — let us know you're on it.</Step>
+  <Step>**Build it** — write, test, keep it focused.</Step>
+  <Step>**Open a PR** — explain what and why.</Step>
+  <Step>**Review & merge** — address feedback, get merged.</Step>
+</Steps>
+
+<Takeaway title="Open source. More people.">A more global future. Build with us.</Takeaway>

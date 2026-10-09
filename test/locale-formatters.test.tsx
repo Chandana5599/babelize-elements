@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { renderToString } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { LocaleNumber } from "../src/registry/components/locale-number";
 import { RelativeTime } from "../src/registry/components/relative-time";
@@ -64,5 +65,13 @@ describe("RelativeTime rounding boundaries", () => {
     const date = new Date(Date.now() - elapsedMilliseconds);
     render(<RelativeTime date={date} numeric="always" />);
     expect(screen.getByText(expected)).toBeTruthy();
+  });
+});
+
+describe("RelativeTime server rendering", () => {
+  it("does not render epoch-relative text during SSR", () => {
+    const html = renderToString(<RelativeTime date="2026-10-09T16:04:10.351Z" numeric="always" />);
+
+    expect(html).not.toContain("in 57 years");
   });
 });

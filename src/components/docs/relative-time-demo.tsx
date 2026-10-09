@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { useState } from "react";
-import { RelativeTime } from "@/components/ui/relative-time";
+import { RelativeTime } from "@/registry/components/relative-time";
 
 export function RelativeTimeDemo() {
   const [now] = useState(() => Date.now());

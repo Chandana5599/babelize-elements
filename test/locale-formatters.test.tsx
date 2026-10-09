@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { LocaleNumber } from "../src/registry/components/locale-number";
 import { RelativeTime } from "../src/registry/components/relative-time";
 
@@ -73,5 +73,27 @@ describe("RelativeTime server rendering", () => {
     const html = renderToString(<RelativeTime date="2026-10-09T16:04:10.351Z" numeric="always" />);
 
     expect(html).not.toContain("in 57 years");
+  });
+});
+
+describe("RelativeTime date handling", () => {
+  it("treats offset-free date-time strings as UTC", () => {
+    render(<RelativeTime date="2026-01-01T10:00:00" />);
+    expect(document.querySelector("time")?.getAttribute("datetime")).toBe(
+      "2026-01-01T10:00:00.000Z",
+    );
+  });
+
+  it("describes a changed date relative to the current time", () => {
+    vi.useFakeTimers({ toFake: ["Date"] });
+    try {
+      vi.setSystemTime(new Date("2026-01-01T00:00:00Z"));
+      const { rerender } = render(<RelativeTime date="2026-01-01T00:00:00Z" numeric="always" />);
+      vi.setSystemTime(new Date("2026-01-01T02:00:00Z"));
+      rerender(<RelativeTime date="2026-01-01T01:00:00Z" numeric="always" />);
+      expect(screen.getByText("1 hour ago")).toBeTruthy();
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });

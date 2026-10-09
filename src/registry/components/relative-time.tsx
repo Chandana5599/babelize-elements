@@ -6,7 +6,10 @@ export interface RelativeTimeProps extends Omit<
   React.ComponentPropsWithoutRef<"time">,
   "dateTime" | "style"
 > {
-  /** Date to describe relative to the current time. */
+  /**
+   * Date to describe relative to the current time. Date-time strings without an
+   * offset (e.g. "2026-01-01T10:00") are treated as UTC.
+   */
   date: Date | string | number;
   /** BCP 47 locale, such as "en-US" or "fr-FR". */
   locale?: string;
@@ -56,16 +59,32 @@ function formatRelativeTime(
   return formatter.format(0, "second");
 }
 
+// ISO date-time without `Z` or `±hh:mm`; `new Date` would read it as local time,
+// so server and browser could parse the same string as different instants.
+const OFFSET_FREE_DATE_TIME = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d+)?)?$/;
+
+function parseDate(date: Date | string | number): Date {
+  if (date instanceof Date) return date;
+  if (typeof date === "string" && OFFSET_FREE_DATE_TIME.test(date)) return new Date(`${date}Z`);
+  return new Date(date);
+}
+
 export const RelativeTime = React.forwardRef<HTMLTimeElement, RelativeTimeProps>(
   function RelativeTime(
     { date, locale = "en", numeric = "auto", style = "long", updateInterval, ...rest },
     ref,
   ) {
-    const parsedDate = date instanceof Date ? date : new Date(date);
+    const parsedDate = parseDate(date);
+    const timestamp = parsedDate.getTime();
     const [now, setNow] = React.useState<number | null>(null);
 
+    // Re-read the clock whenever the date changes, so a new date is described
+    // relative to the current time rather than the mount time.
     React.useEffect(() => {
       setNow(Date.now());
+    }, [timestamp]);
+
+    React.useEffect(() => {
       if (!updateInterval || updateInterval <= 0) return;
 
       const timer = setInterval(() => setNow(Date.now()), updateInterval);

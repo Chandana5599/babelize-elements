@@ -1,0 +1,36 @@
+﻿---
+title: Relative Time
+description: Display dates and times in locale-aware relative terms.
+---
+
+import { PreviewComponents } from "@/components/docs/preview-components";
+import { RelativeTimeDemo } from "@/components/docs/relative-time-demo";
+
+<PreviewComponents registryName="relative-time">
+  <RelativeTimeDemo />
+</PreviewComponents>
+
+## Usage
+
+```tsx
+import { RelativeTime } from "@/components/ui/relative-time";
+
+export function Example() {
+  return (
+    <>
+      <RelativeTime date={Date.now() - 3600000} />
+      <RelativeTime date={Date.now() + 86400000} locale="fr" />
+    </>
+  );
+}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `date` | `Date \| string \| number` | Required | Date to format. |
+| `locale` | `string` | `"en"` | Locale used for formatting. |
+| `numeric` | `"always" \| "auto"` | `"auto"` | Whether to use terms like "yesterday". |
+| `style` | `"long" \| "short" \| "narrow"` | `"long"` | Relative time display style. |
+| `updateInterval` | `number` | — | Optional refresh interval in milliseconds. |

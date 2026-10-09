@@ -1,0 +1,28 @@
+﻿---
+title: Locale Number
+description: Locale-aware number formatting for decimals, percentages, and units.
+---
+
+import { PreviewComponents } from "@/components/docs/preview-components";
+import { LocaleNumberDemo } from "@/components/docs/locale-number-demo";
+
+<PreviewComponents registryName="locale-number">
+  <LocaleNumberDemo />
+</PreviewComponents>
+
+## Usage
+
+```tsx
+import { LocaleNumber } from "@/components/ui/locale-number";
+
+export function Example() {
+  return (
+    <>
+      <LocaleNumber value={1234567.89} locale="en-US" />
+      <LocaleNumber value={0.25} style="percent" />
+      <LocaleNumber value={5} style="unit" unit="kilometer" />
+      <LocaleNumber value={1200} notation="compact" />
+    </>
+  );
+}
+```

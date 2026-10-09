@@ -14,7 +14,7 @@ interface ItemDef {
   /** Source file relative to `src/`. */
   source: string;
   /**
-   * Install destination, relative to the alias its `type` selects — `ui/<file>`
+   * Install destination, relative to the alias its `type` selects â€” `ui/<file>`
    * for `registry:ui`, `lib/<file>` for `registry:lib`. Components are
    * `registry:ui` rather than `registry:component` because that is the only type
    * the shadcn CLI resolves against the consumer's `ui` alias; tagged as
@@ -86,6 +86,22 @@ const ITEMS: ItemDef[] = [
     filePath: "lib/utils.ts",
     dependencies: ["clsx", "tailwind-merge"],
   },
+  {
+    name: "locale-number",
+    title: "Locale Number",
+    description: "Locale-aware number formatting for decimals, percentages, units, and compact notation.",
+    type: "registry:ui",
+    source: "registry/components/locale-number",
+    filePath: "ui/locale-number.tsx",
+  },
+  {
+    name: "relative-time",
+    title: "Relative Time",
+    description: "Locale-aware relative time formatting with optional live updates.",
+    type: "registry:ui",
+    source: "registry/components/relative-time",
+    filePath: "ui/relative-time.tsx",
+  },
 ];
 
 /**
@@ -94,7 +110,7 @@ const ITEMS: ItemDef[] = [
  * alias and assume the file is already there, because `shadcn init` creates it.
  *
  * Listing it instead made the shadcn CLI write `cn` into the `lib` directory while
- * still rewriting the import to the `utils` alias — an unresolvable import in any
+ * still rewriting the import to the `utils` alias â€” an unresolvable import in any
  * project that points `utils` somewhere other than `<lib>/utils`, and a silent
  * overwrite of the project's own `cn` everywhere else. The bundled CLI installs
  * `utils` itself when the file is genuinely missing.

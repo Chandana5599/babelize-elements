@@ -88,6 +88,28 @@ describe("LanguageSwitcher", () => {
     expect(container.firstElementChild).toHaveAttribute("dir", "ltr");
   });
 
+  it.each([
+    { code: "ckb", label: "Kurdish", rtl: true, direction: "rtl" },
+    { code: "ar", label: "Arabic", rtl: false, direction: "ltr" },
+  ])("honours rtl=$rtl for $code on the root and options", async ({ direction, ...locale }) => {
+    const { container } = render(<LanguageSwitcher locales={[locale]} />);
+    expect(container.firstElementChild).toHaveAttribute("dir", direction);
+
+    await userEvent.click(screen.getByRole("button", { name: /Current language/ }));
+    expect(screen.getByRole("option", { name: locale.label })).toHaveAttribute("dir", direction);
+  });
+
+  it("updates direction when an overridden locale is selected", async () => {
+    const { container } = render(
+      <LanguageSwitcher locales={[{ code: "en" }, { code: "ckb", label: "Kurdish", rtl: true }]} />,
+    );
+    expect(container.firstElementChild).toHaveAttribute("dir", "ltr");
+
+    await userEvent.click(screen.getByRole("button", { name: /Current language/ }));
+    await userEvent.click(screen.getByRole("option", { name: "Kurdish" }));
+    expect(container.firstElementChild).toHaveAttribute("dir", "rtl");
+  });
+
   it("does not reverse an RTL row twice", async () => {
     // `dir="rtl"` already lays a flex row out right-to-left; a flex-row-reverse on
     // top of it put the row back in LTR order.

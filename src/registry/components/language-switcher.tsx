@@ -272,7 +272,7 @@ export const LanguageSwitcher = React.forwardRef<HTMLDivElement, LanguageSwitche
         l.code.toLowerCase().includes(search.toLowerCase()),
     );
 
-    const dir = isRtl(locale) ? "rtl" : "ltr";
+    const dir = (activeLocale?.rtl ?? isRtl(locale)) ? "rtl" : "ltr";
 
     React.useEffect(() => {
       function handleClickOutside(e: MouseEvent) {
@@ -355,7 +355,7 @@ export const LanguageSwitcher = React.forwardRef<HTMLDivElement, LanguageSwitche
             <div className="max-h-60 overflow-y-auto p-1">
               {filtered.map((l) => {
                 const isActive = l.code === locale;
-                const itemDir = l.rtl || isRtl(l.code) ? "rtl" : "ltr";
+                const itemDir = (l.rtl ?? isRtl(l.code)) ? "rtl" : "ltr";
                 return (
                   <button
                     key={l.code}

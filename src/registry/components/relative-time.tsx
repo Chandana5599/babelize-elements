@@ -62,7 +62,7 @@ export const RelativeTime = React.forwardRef<HTMLTimeElement, RelativeTimeProps>
     ref,
   ) {
     const parsedDate = date instanceof Date ? date : new Date(date);
-    const [now, setNow] = React.useState(0);
+    const [now, setNow] = React.useState<number | null>(null);
 
     React.useEffect(() => {
       setNow(Date.now());
@@ -72,9 +72,10 @@ export const RelativeTime = React.forwardRef<HTMLTimeElement, RelativeTimeProps>
       return () => clearInterval(timer);
     }, [updateInterval]);
 
-    const formatted = Number.isNaN(parsedDate.getTime())
-      ? ""
-      : formatRelativeTime(parsedDate, now, locale, numeric, style);
+    const formatted =
+      now === null || Number.isNaN(parsedDate.getTime())
+        ? ""
+        : formatRelativeTime(parsedDate, now, locale, numeric, style);
 
     return (
       <time

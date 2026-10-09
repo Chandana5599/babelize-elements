@@ -89,7 +89,8 @@ const ITEMS: ItemDef[] = [
   {
     name: "locale-number",
     title: "Locale Number",
-    description: "Locale-aware number formatting for decimals, percentages, units, and compact notation.",
+    description:
+      "Locale-aware number formatting for decimals, percentages, units, and compact notation.",
     type: "registry:ui",
     source: "registry/components/locale-number",
     filePath: "ui/locale-number.tsx",

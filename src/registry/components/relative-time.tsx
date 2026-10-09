@@ -2,8 +2,10 @@
 
 import * as React from "react";
 
-export interface RelativeTimeProps
-  extends Omit<React.ComponentPropsWithoutRef<"time">, "dateTime" | "style"> {
+export interface RelativeTimeProps extends Omit<
+  React.ComponentPropsWithoutRef<"time">,
+  "dateTime" | "style"
+> {
   /** Date to describe relative to the current time. */
   date: Date | string | number;
   /** BCP 47 locale, such as "en-US" or "fr-FR". */
@@ -45,44 +47,35 @@ function formatRelativeTime(
   return formatter.format(0, "second");
 }
 
-export const RelativeTime = React.forwardRef<
-  HTMLTimeElement,
-  RelativeTimeProps
->(function RelativeTime(
-  {
-    date,
-    locale = "en",
-    numeric = "auto",
-    style = "long",
-    updateInterval,
-    ...rest
+export const RelativeTime = React.forwardRef<HTMLTimeElement, RelativeTimeProps>(
+  function RelativeTime(
+    { date, locale = "en", numeric = "auto", style = "long", updateInterval, ...rest },
+    ref,
+  ) {
+    const parsedDate = date instanceof Date ? date : new Date(date);
+    const [now, setNow] = React.useState(() => Date.now());
+
+    React.useEffect(() => {
+      if (!updateInterval || updateInterval <= 0) return;
+
+      const timer = setInterval(() => setNow(Date.now()), updateInterval);
+      return () => clearInterval(timer);
+    }, [updateInterval]);
+
+    const formatted = Number.isNaN(parsedDate.getTime())
+      ? ""
+      : formatRelativeTime(parsedDate, now, locale, numeric, style);
+
+    return (
+      <time
+        ref={ref}
+        dateTime={Number.isNaN(parsedDate.getTime()) ? undefined : parsedDate.toISOString()}
+        {...rest}
+      >
+        {formatted}
+      </time>
+    );
   },
-  ref,
-) {
-  const parsedDate = date instanceof Date ? date : new Date(date);
-  const [now, setNow] = React.useState(() => Date.now());
-
-  React.useEffect(() => {
-    if (!updateInterval || updateInterval <= 0) return;
-
-    const timer = setInterval(() => setNow(Date.now()), updateInterval);
-    return () => clearInterval(timer);
-  }, [updateInterval]);
-
-  const formatted = Number.isNaN(parsedDate.getTime())
-    ? ""
-    : formatRelativeTime(parsedDate, now, locale, numeric, style);
-
-  return (
-    <time
-      ref={ref}
-      dateTime={Number.isNaN(parsedDate.getTime()) ? undefined : parsedDate.toISOString()}
-      {...rest}
-    >
-      {formatted}
-    </time>
-  );
-});
+);
 
 RelativeTime.displayName = "RelativeTime";
-

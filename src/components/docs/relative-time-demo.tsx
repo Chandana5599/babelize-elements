@@ -15,8 +15,7 @@ export function RelativeTimeDemo() {
         Future: <RelativeTime date={now + 24 * 60 * 60 * 1000} />
       </p>
       <p>
-        French:{" "}
-        <RelativeTime date={now - 24 * 60 * 60 * 1000} locale="fr" />
+        French: <RelativeTime date={now - 24 * 60 * 60 * 1000} locale="fr" />
       </p>
     </div>
   );

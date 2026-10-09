@@ -2,8 +2,10 @@
 
 import * as React from "react";
 
-export interface LocaleNumberProps
-  extends Omit<React.ComponentPropsWithoutRef<"data">, "value" | "style"> {
+export interface LocaleNumberProps extends Omit<
+  React.ComponentPropsWithoutRef<"data">,
+  "value" | "style"
+> {
   /** Number to format. */
   value: number;
   /** BCP 47 locale, such as "en-US" or "de-DE". */
@@ -22,37 +24,35 @@ export interface LocaleNumberProps
   maximumFractionDigits?: number;
 }
 
-export const LocaleNumber = React.forwardRef<
-  HTMLDataElement,
-  LocaleNumberProps
->(function LocaleNumber(
-  {
-    value,
-    locale = "en",
-    style = "decimal",
-    unit,
-    unitDisplay = "short",
-    notation = "standard",
-    minimumFractionDigits,
-    maximumFractionDigits,
-    ...rest
-  },
-  ref,
-) {
-  const formatted = new Intl.NumberFormat(locale, {
-    style,
-    ...(style === "unit" && unit ? { unit, unitDisplay } : {}),
-    notation,
-    minimumFractionDigits,
-    maximumFractionDigits,
-  }).format(value);
+export const LocaleNumber = React.forwardRef<HTMLDataElement, LocaleNumberProps>(
+  function LocaleNumber(
+    {
+      value,
+      locale = "en",
+      style = "decimal",
+      unit,
+      unitDisplay = "short",
+      notation = "standard",
+      minimumFractionDigits,
+      maximumFractionDigits,
+      ...rest
+    },
+    ref,
+  ) {
+    const formatted = new Intl.NumberFormat(locale, {
+      style,
+      ...(style === "unit" && unit ? { unit, unitDisplay } : {}),
+      notation,
+      minimumFractionDigits,
+      maximumFractionDigits,
+    }).format(value);
 
-  return (
-    <data ref={ref} value={value} {...rest}>
-      {formatted}
-    </data>
-  );
-});
+    return (
+      <data ref={ref} value={value} {...rest}>
+        {formatted}
+      </data>
+    );
+  },
+);
 
 LocaleNumber.displayName = "LocaleNumber";
-

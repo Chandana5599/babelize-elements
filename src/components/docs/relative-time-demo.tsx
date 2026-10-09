@@ -1,10 +1,15 @@
-﻿"use client";
+"use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RelativeTime } from "@/registry/components/relative-time";
 
 export function RelativeTimeDemo() {
-  const [now] = useState(() => Date.now());
+  const [now, setNow] = useState(0);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setNow(Date.now()), 0);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="flex flex-col gap-3">

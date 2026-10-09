@@ -1,4 +1,4 @@
-﻿{
+{
   "title": "Formatters",
   "icon": "Languages",
   "pages": ["locale-number", "relative-time"],

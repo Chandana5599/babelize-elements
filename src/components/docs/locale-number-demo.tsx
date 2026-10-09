@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { LocaleNumber } from "@/registry/components/locale-number";
 

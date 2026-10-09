@@ -1,4 +1,4 @@
-﻿import { render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { LocaleNumber } from "../src/registry/components/locale-number";
 import { RelativeTime } from "../src/registry/components/relative-time";
@@ -38,5 +38,31 @@ describe("RelativeTime", () => {
     expect(document.querySelector("time")?.getAttribute("datetime")).toBe(
       "2026-01-01T00:00:00.000Z",
     );
+  });
+});
+
+describe("LocaleNumber runtime validation", () => {
+  it("rejects unit style without a unit from JavaScript callers", () => {
+    const invalidProps = {
+      value: 5,
+      style: "unit",
+    } as unknown as import("react").ComponentProps<typeof LocaleNumber>;
+
+    expect(() => render(<LocaleNumber {...invalidProps} />)).toThrow(
+      'LocaleNumber requires the "unit" prop when style="unit".',
+    );
+  });
+});
+
+describe("RelativeTime rounding boundaries", () => {
+  it.each([
+    { elapsedMilliseconds: 59.6 * 60 * 1000, expected: "1 hour ago" },
+    { elapsedMilliseconds: 23.6 * 60 * 60 * 1000, expected: "1 day ago" },
+    { elapsedMilliseconds: 6.6 * 24 * 60 * 60 * 1000, expected: "1 week ago" },
+    { elapsedMilliseconds: 364 * 24 * 60 * 60 * 1000, expected: "1 year ago" },
+  ])("promotes rounded values to the next unit", ({ elapsedMilliseconds, expected }) => {
+    const date = new Date(Date.now() - elapsedMilliseconds);
+    render(<RelativeTime date={date} numeric="always" />);
+    expect(screen.getByText(expected)).toBeTruthy();
   });
 });

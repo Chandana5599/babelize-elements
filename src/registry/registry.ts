@@ -14,7 +14,7 @@ interface ItemDef {
   /** Source file relative to `src/`. */
   source: string;
   /**
-   * Install destination, relative to the alias its `type` selects â€” `ui/<file>`
+   * Install destination, relative to the alias its `type` selects — `ui/<file>`
    * for `registry:ui`, `lib/<file>` for `registry:lib`. Components are
    * `registry:ui` rather than `registry:component` because that is the only type
    * the shadcn CLI resolves against the consumer's `ui` alias; tagged as
@@ -111,7 +111,7 @@ const ITEMS: ItemDef[] = [
  * alias and assume the file is already there, because `shadcn init` creates it.
  *
  * Listing it instead made the shadcn CLI write `cn` into the `lib` directory while
- * still rewriting the import to the `utils` alias â€” an unresolvable import in any
+ * still rewriting the import to the `utils` alias — an unresolvable import in any
  * project that points `utils` somewhere other than `<lib>/utils`, and a silent
  * overwrite of the project's own `cn` everywhere else. The bundled CLI installs
  * `utils` itself when the file is genuinely missing.

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import * as React from "react";
 
@@ -38,9 +38,18 @@ function formatRelativeTime(
   const difference = (date.getTime() - now) / 1000;
   const formatter = new Intl.RelativeTimeFormat(locale, { numeric, style });
 
-  for (const { unit, seconds } of UNITS) {
-    if (Math.abs(difference) >= seconds || unit === "second") {
-      return formatter.format(Math.round(difference / seconds), unit);
+  for (let index = 0; index < UNITS.length; index++) {
+    const { unit, seconds } = UNITS[index];
+
+    if (Math.abs(difference) >= seconds || index === UNITS.length - 1) {
+      const rounded = Math.round(difference / seconds);
+      const largerUnit = UNITS[index - 1];
+
+      if (largerUnit && Math.abs(rounded) >= Math.round(largerUnit.seconds / seconds)) {
+        return formatter.format(Math.round(difference / largerUnit.seconds), largerUnit.unit);
+      }
+
+      return formatter.format(rounded, unit);
     }
   }
 
@@ -53,9 +62,10 @@ export const RelativeTime = React.forwardRef<HTMLTimeElement, RelativeTimeProps>
     ref,
   ) {
     const parsedDate = date instanceof Date ? date : new Date(date);
-    const [now, setNow] = React.useState(() => Date.now());
+    const [now, setNow] = React.useState(0);
 
     React.useEffect(() => {
+      setNow(Date.now());
       if (!updateInterval || updateInterval <= 0) return;
 
       const timer = setInterval(() => setNow(Date.now()), updateInterval);

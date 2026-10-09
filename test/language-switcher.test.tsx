@@ -12,6 +12,21 @@ describe("LanguageSwitcher", () => {
     expect(screen.getByRole("button")).toHaveAccessibleName(/English/);
   });
 
+  it.each(["hy", "lo", "km", "am", "sd"])(
+    "renders the native name of %s correctly",
+    async (code) => {
+      const nativeName = new Intl.DisplayNames([code], { type: "language" }).of(code)!;
+      render(<LanguageSwitcher locales={[{ code }]} label="native" />);
+      const trigger = screen.getByRole("button", { name: /Current language/ });
+      expect(trigger.textContent?.toLocaleLowerCase(code)).toBe(nativeName.toLocaleLowerCase(code));
+
+      await userEvent.click(trigger);
+      expect(screen.getByRole("option").textContent?.toLocaleLowerCase(code)).toBe(
+        nativeName.toLocaleLowerCase(code),
+      );
+    },
+  );
+
   it("honours defaultValue and exposes listbox semantics", async () => {
     render(<LanguageSwitcher locales={locales} defaultValue="fr" />);
     const trigger = screen.getByRole("button");
